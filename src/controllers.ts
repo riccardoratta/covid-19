@@ -34,7 +34,7 @@ export class Region implements model.Region {
     }
 
     set(year: number, month: number, day: number, entry: model.Entry): any | undefined {
-        return Region.cases.set(`${this.id}.${year}.${month}.${day}`, entry)
+        return Region.cases.setWith(`[${this.id}][${year}][${month}][${day}]`, entry, Object).write()
     }
 
     static get regions(): _.CollectionChain<model.Region> {
