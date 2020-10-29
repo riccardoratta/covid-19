@@ -19,7 +19,7 @@ app.get('/regions', (req, resp) => {
 })
 
 app.get('/region/:regionId', (req, resp) => {
-    const region = Region.fromId(req.params.regionId)
+    const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
         return resp.send(region)
     } else {
@@ -28,9 +28,9 @@ app.get('/region/:regionId', (req, resp) => {
 })
 
 app.get('/region/:regionId/cases/:year', (req, resp) => {
-    const region = Region.fromId(req.params.regionId)
+    const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
-        const year = region.year(req.params.year)
+        const year = region.year(parseInt(req.params.year))
         if (year) {
             return resp.send(year)
         } else {
@@ -42,9 +42,9 @@ app.get('/region/:regionId/cases/:year', (req, resp) => {
 })
 
 app.get('/region/:regionId/cases/:year/:month', (req, resp) => {
-    const region = Region.fromId(req.params.regionId)
+    const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
-        const month = region.month(req.params.year, req.params.month)
+        const month = region.month(parseInt(req.params.year), parseInt(req.params.month))
         if (month) {
             return resp.send(month)
         } else {
@@ -57,10 +57,11 @@ app.get('/region/:regionId/cases/:year/:month', (req, resp) => {
 
 
 app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
-    const region = Region.fromId(req.params.regionId)
     console.log(region?.id, region?.name)
+    const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
-        const day = region.day(req.params.year, req.params.month, req.params.day)
+        const day = region.day
+            (parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day))
         if (day) {
             return resp.send(day)
         } else {

@@ -1,4 +1,4 @@
-import { d, parseMaybeInt } from './helpers'
+import { d } from './helpers'
 import * as model from './models'
 
 /**
@@ -12,9 +12,7 @@ export class Region implements model.Region {
         return new Region(value.id, value.name)
     }
 
-    static fromId(id: number | string): Region | undefined {
-        id = parseMaybeInt(id)
-
+    static fromId(id: number): Region | undefined {
         if (Region.regions.has(id).value()) {
             return Region.fromInterface(
                 Region.regions.find({ id: id as number }).value())
@@ -23,30 +21,21 @@ export class Region implements model.Region {
         return undefined
     }
 
-    year(year: number | string): any | undefined {
-        year = parseMaybeInt(year)
-
+    year(year: number): any | undefined {
         if (Region.cases.has(`${this.id}.${year}`).value()) {
             return Region.cases.get(this.id).get(year).value()
         }
     }
 
-    month(year: number | string, month: number | string): any | undefined {
-        year = parseMaybeInt(year)
-        month = parseMaybeInt(month)
-
+    month(year: number, month: number): any | undefined {
         if (Region.cases.has(`${this.id}.${year}.${month}`).value()) {
-            return Region.cases.get(this.id).get(year as number).get(month).value()
+            return Region.cases.get(this.id).get(year).get(month).value()
         }
     }
 
-    day(year: number | string, month: number | string, day: number | string): any | undefined {
-        year = parseMaybeInt(year)
-        month = parseMaybeInt(month)
-        day = parseMaybeInt(day)
-
+    day(year: number, month: number, day: number): any | undefined {
         if (Region.cases.has(`${this.id}.${year}.${month}.${day}`)) {
-            return Region.cases.get(this.id).get(year as number).get(month as number).get(day).value()
+            return Region.cases.get(this.id).get(year).get(month).get(day).value()
         }
     }
 
