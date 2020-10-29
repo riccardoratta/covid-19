@@ -39,7 +39,7 @@ export class Region implements model.Region {
         }
     }
 
-    set(year: number, month: number, day: number, entry: model.Entry): any | undefined {
+    set(year: number, month: number, day: number, entry: model.Entry): Promise<model.Cases> {
         return Region.cases.setWith(`[${this.id}][${year}][${month}][${day}]`, entry, Object).write()
     }
 

@@ -71,14 +71,14 @@ app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
     }
 })
 
-app.post('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
+app.post('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
     const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
         const day = region.day(
             parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day))
         if (!day) {
-            return region.set(
-                parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day), req.body)
+            return resp.send(await region.set(
+                parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day), req.body))
         } else {
             resp.status(400).send('Entry already added')
         }
@@ -87,14 +87,14 @@ app.post('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
     }
 })
 
-app.patch('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
+app.patch('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
     const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
         const day = region.day(
             parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day))
         if (day) {
-            return region.set(
-                parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day), req.body)
+            return resp.send(await region.set(
+                parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day), req.body))
         } else {
             resp.status(404).send('Entry not found')
         }
