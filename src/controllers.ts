@@ -15,19 +15,25 @@ export class Region implements model.Region {
         }
     }
 
-    year(year: number): any | undefined {
+    year(year: number): {
+        [month: number]: {
+            [day: number]: model.Entry;
+        };
+    } | undefined {
         if (Region.cases.has(`${this.id}.${year}`).value()) {
             return Region.cases.get(this.id).get(year).value()
         }
     }
 
-    month(year: number, month: number): any | undefined {
+    month(year: number, month: number): {
+        [day: number]: model.Entry;
+    } | undefined {
         if (Region.cases.has(`${this.id}.${year}.${month}`).value()) {
             return Region.cases.get(this.id).get(year).get(month).value()
         }
     }
 
-    day(year: number, month: number, day: number): any | undefined {
+    day(year: number, month: number, day: number): model.Entry | undefined {
         if (Region.cases.has(`${this.id}.${year}.${month}.${day}`)) {
             return Region.cases.get(this.id).get(year).get(month).get(day).value()
         }
