@@ -1,10 +1,6 @@
 import { d } from './helpers'
 import * as model from './models'
 
-/**
- * DO NOT CHAIN HAS
- * this `console.log(Region.cases.has(this.id).has(year).value())` will not work!
- */
 export class Region implements model.Region {
     private constructor(public id: number, public name: string) { }
 
@@ -17,8 +13,6 @@ export class Region implements model.Region {
             return Region.fromInterface(
                 Region.regions.find({ id: id as number }).value())
         }
-
-        return undefined
     }
 
     year(year: number): any | undefined {

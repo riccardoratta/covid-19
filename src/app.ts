@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.json())
 
 
-app.get('/regions', (req, resp) => {
+app.get('/regions', (_, resp) => {
     resp.send(d.get('regions'))
 })
 
@@ -77,7 +77,7 @@ app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
     - Asintomatic vs sentimatic per region
 */
 
-app.listen(port, err => {
+app.listen(port, _ => {
     d.defaults({
         cases: {
             13: {
