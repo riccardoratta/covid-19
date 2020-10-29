@@ -57,7 +57,6 @@ app.get('/region/:regionId/cases/:year/:month', (req, resp) => {
 
 
 app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
-    console.log(region?.id, region?.name)
     const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
         const day = region.day
