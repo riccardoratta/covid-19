@@ -9,9 +9,9 @@ export class Region implements model.Region {
     }
 
     static fromId(id: number): Region | undefined {
-        if (Region.regions.has(id).value()) {
+        if (Region.regions.find({ id }).value()) {
             return Region.fromInterface(
-                Region.regions.find({ id: id as number }).value())
+                Region.regions.find({ id }).value())
         }
     }
 
