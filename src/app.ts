@@ -14,7 +14,6 @@ app.use(compression())
 app.use(cors())
 app.use(express.json())
 
-
 app.get('/regions', (_, resp) => {
     resp.send(d.get('regions'))
 })
@@ -105,13 +104,8 @@ app.patch('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
     }
 })
 
-/* IDEAS for assigment
-    - Delta of cases between two region (date)
-    - Percentage of positive tests vs total number
-    - Asintomatic vs sentimatic per region
-*/
-
 app.listen(port, _ => {
+    // preload some cases to avoid having an empty database
     d.defaults({
         cases: {
             13: {
