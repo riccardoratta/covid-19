@@ -71,7 +71,7 @@ app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
     }
 })
 
-app.post('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
+app.put('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
     const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
         const day = region.day(
