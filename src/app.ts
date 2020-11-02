@@ -4,6 +4,7 @@ import compression from 'compression'
 
 import { Region } from './controllers'
 import { d } from './helpers'
+import { DateTime } from 'luxon'
 
 const port = 80
 
@@ -12,7 +13,6 @@ const app = express()
 app.use(compression())
 app.use(cors())
 app.use(express.json())
-
 
 app.get('/regions', (_, resp) => {
     resp.send(d.get('regions'))
@@ -71,16 +71,17 @@ app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
     }
 })
 
-app.post('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
+app.put('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
     const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
-        const day = region.day(
+        const dateTime = DateTime.local(
             parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day))
-        if (!day) {
+        // check if the provided date makes sense
+        if (dateTime.isValid) {
             return resp.send(await region.set(
-                parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day), req.body))
+                dateTime.year, dateTime.month, dateTime.day, req.body))
         } else {
-            resp.status(400).send('Entry already added')
+            resp.status(400).send(`Provided date not valid: ${dateTime.invalidReason}`)
         }
     } else {
         resp.status(404).send('Region not found')
@@ -103,13 +104,8 @@ app.patch('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
     }
 })
 
-/* IDEAS for assigment
-    - Delta of cases between two region (date)
-    - Percentage of positive tests vs total number
-    - Asintomatic vs sentimatic per region
-*/
-
 app.listen(port, _ => {
+    // preload some cases to avoid having an empty database
     d.defaults({
         cases: {
             13: {

@@ -1,19 +1,26 @@
+/**
+ * This file contains all the models used to store COVID-19 cases.
+ */
 
+/**
+ * Database, a general container of the smaller models.
+ */
 export interface Database {
-    cases: Cases,
+    cases: Cases, // see later
     regions: Region[],
 }
 
-export interface Cases {
-    [id: number]: {
-        [year: number]: {
-            [month: number]: {
-                [day: number]: Entry
-            }
-        }
-    }
+/**
+ * Italian region, composed by an id and a name.
+ */
+export interface Region {
+    id: number
+    name: string
 }
 
+/**
+ * This is where we will store all the informations of the day.
+ */
 export interface Entry {
     hospitalized_with_symptoms: number
     intensive_care: number
@@ -31,7 +38,16 @@ export interface Entry {
     cases_tested: number
 }
 
-export interface Region {
-    id: number
-    name: string
+
+/**
+ * Each entry is organized in a "folder" structure region/year/month/day.
+ */
+export interface Cases {
+    [id: number]: {
+        [year: number]: {
+            [month: number]: {
+                [day: number]: Entry
+            }
+        }
+    }
 }
