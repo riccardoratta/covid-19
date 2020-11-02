@@ -15,6 +15,14 @@ header = ("date,state,region_id,region_name,lat,lon,hospitalized_with_symptoms,i
           "cases_from_suspected_diagnostic,cases_from_screening,total_cases,tampons,cases_tested,notes\n")
 
 
+def myInt(v):
+    try:
+        variable = int(v)
+    except ValueError:
+        variable = None
+    return variable
+
+
 @click.group(chain=True)
 def main():
     """
@@ -56,37 +64,24 @@ def download(all, lastest, date):
 
 
 @main.command()
-@click.option('-c', '--create', is_flag=True)
-@click.option('-u', '--update', is_flag=True)
-def send(create, update):
-    "Send data to db create or update (post or patch)"
+def send():
+    "Send data to db (put)"
 
     with open(file) as csvfile:
         reader = csv.DictReader(csvfile)
         field = reader.fieldnames
         status_codes = dict()
+        click.echo("Sending data...")
 
         for row in reader:
-            payload = {field[i]: int(row[field[i]])
+            payload = {field[i]: myInt(row[field[i]])
                        for i in range(header_start, header_end)}
             date = datetime.fromisoformat(row['date'])
             url = api_url + '/region/' + \
                 row['region_id'] + "/cases/" + str(date.year) + \
                 "/" + str(date.month) + "/" + str(date.day)
-
-            if create and update:
-                click.echo("Multiple options not allowed")
-                return
-            elif create:
-                response = requests.post(url, data=json.dumps(payload), headers={
-                                         "content-type": "application/json"})
-            elif update:
-                response = requests.patch(url, data=json.dumps(payload), headers={
-                                          "content-type": "application/json"})
-            else:
-                click.echo(click.get_current_context().get_help())
-                return
-
+            response = requests.put(url, data=json.dumps(payload), headers={
+                "content-type": "application/json"})
             key = 'n of ' + str(response.status_code)
             status_codes[key] = status_codes[key] + \
                 1 if key in status_codes else 1
