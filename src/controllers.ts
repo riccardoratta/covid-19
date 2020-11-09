@@ -5,7 +5,8 @@ import * as model from './models'
  * This class is useful to hide and reuse some logic to interact with the models.
  */
 export class Region implements model.Region {
-    private constructor(public id: number, public name: string) { }
+    private constructor(
+        public id: number, public name: string, public lat: number, public long: number) { }
 
     /**
      * Convert a model, which is basically an object with interface, into a region controller
@@ -13,7 +14,7 @@ export class Region implements model.Region {
      * @param value - The interface to supply.
      */
     static fromInterface(value: model.Region) {
-        return new Region(value.id, value.name)
+        return new Region(value.id, value.name, value.lat, value.long)
     }
 
     /**

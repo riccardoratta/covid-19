@@ -11,11 +11,13 @@ export interface Database {
 }
 
 /**
- * Italian region, composed by an id and a name.
+ * Italian region, composed by an id, a name and the geographical coordinates.
  */
 export interface Region {
     id: number
     name: string
+    lat: number
+    long: number
 }
 
 /**
