@@ -8,19 +8,22 @@ file = 'data.csv'
 url_head = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni'
 url_tail = '.csv'
 api_url = 'http://localhost:80'
-header_start = 6
+header_start = 4
 header_end = 19
 header = ("date,state,region_id,region_name,lat,lon,hospitalized_with_symptoms,intensive_care,total_hospitalized,"
           "home_isolation,total_positive,total_positive_variation,new_positives,resigned_cured,deceased,"
           "cases_from_suspected_diagnostic,cases_from_screening,total_cases,tampons,cases_tested,notes\n")
 
 
-def my_int(v):
-    # convert string to int (if possible) or to None (if not)
+def my_num(v):
+    # convert string to int (if possible) or to float (if possible) or to None (if not)
     try:
         variable = int(v)
     except ValueError:
-        variable = None
+        try:
+            variable = float(v)
+        except ValueError:
+            variable = None
     return variable
 
 
@@ -79,7 +82,7 @@ def send():
         click.echo("Sending data...")
 
         for row in reader:  # for each row
-            payload = {field[i]: my_int(row[field[i]])
+            payload = {field[i]: my_num(row[field[i]])
                        for i in range(header_start, header_end)}  # create payload object
             date = datetime.fromisoformat(row['date'])
             url = api_url + '/region/' + \
