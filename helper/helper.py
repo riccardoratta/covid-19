@@ -7,7 +7,7 @@ from datetime import datetime
 file = 'data.csv'
 url_head = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni'
 url_tail = '.csv'
-api_url = 'http://localhost:80'
+api_url = 'http://localhost:8080'
 header_start = 4
 header_end = 19
 header = ("date,state,region_id,region_name,lat,lon,hospitalized_with_symptoms,intensive_care,total_hospitalized,"
