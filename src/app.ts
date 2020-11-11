@@ -55,22 +55,6 @@ app.get('/region/:regionId/cases/:year/:month', (req, resp) => {
     }
 })
 
-
-app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
-    const region = Region.fromId(parseInt(req.params.regionId))
-    if (region) {
-        const day = region.day
-            (parseInt(req.params.year), parseInt(req.params.month), parseInt(req.params.day))
-        if (day) {
-            return resp.send(day)
-        } else {
-            resp.status(404).send('Year, month or day not found')
-        }
-    } else {
-        resp.status(404).send('Region not found')
-    }
-})
-
 app.put('/region/:regionId/cases/:year/:month/:day', async (req, resp) => {
     const region = Region.fromId(parseInt(req.params.regionId))
     if (region) {
