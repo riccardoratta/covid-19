@@ -48,7 +48,7 @@ app.get('/region/:regionId/cases/:year/:month', (req, resp) => {
         if (month) {
             return resp.send(month)
         } else {
-            resp.status(404).send('Year not found')
+            resp.status(404).send('Year or month not found')
         }
     } else {
         resp.status(404).send('Region not found')
@@ -64,7 +64,7 @@ app.get('/region/:regionId/cases/:year/:month/:day', (req, resp) => {
         if (day) {
             return resp.send(day)
         } else {
-            resp.status(404).send('Year not found')
+            resp.status(404).send('Year, month or day not found')
         }
     } else {
         resp.status(404).send('Region not found')
