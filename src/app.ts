@@ -3,7 +3,7 @@ import cors from 'cors'
 import compression from 'compression'
 
 import { Region } from './controllers'
-import { d } from './helpers'
+import { Calendar, d } from './helpers'
 import { DateTime } from 'luxon'
 
 const port = 8080
