@@ -108,7 +108,7 @@ app.listen(port, _ => {
                             cases_from_suspected_diagnostic: 6889,
                             cases_from_screening: 2304,
                             total_cases: 9193,
-                            tampons: 276681,
+                            swabs: 276681,
                             cases_tested: 172659,
                         }
                     }

@@ -12,7 +12,7 @@ header_start = 4
 header_end = 19
 header = ("date,state,region_id,region_name,lat,lon,hospitalized_with_symptoms,intensive_care,total_hospitalized,"
           "home_isolation,total_positive,total_positive_variation,new_positives,resigned_cured,deceased,"
-          "cases_from_suspected_diagnostic,cases_from_screening,total_cases,tampons,cases_tested,notes\n")
+          "cases_from_suspected_diagnostic,cases_from_screening,total_cases,swabs,cases_tested,notes\n")
 
 
 def my_num(v):
